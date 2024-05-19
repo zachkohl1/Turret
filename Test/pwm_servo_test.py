@@ -12,8 +12,8 @@ tilt_servo.start(100)
 base_servo.start(100)
 
 def set_servo_angle(servo, angle):
-    duty_cycle = angle / 18 + 2  # Convert angle to duty cycle
-    servo.change_duty_cycle(duty_cycle)  # Set duty cycle
+    duty_cycle = (angle / 18) + 2             # Convert angle to duty cycle
+    servo.change_duty_cycle(duty_cycle)     # Set duty cycle
 
 def test_base():
     for angle in [0, 90, 180]:
@@ -28,12 +28,15 @@ def test_tilt():
         sleep(2)
 
 # Run the servo tests
-test_base()
-test_tilt()
-
-# Clean up
-tilt_servo.stop()
-print("Tilt servo stopped")
-sleep(.5)
-base_servo.stop()
-print("Base servo stopped")
+try: 
+    test_base()
+    test_tilt()
+except Exception as e:
+    print("Error: ", e)
+finally:
+    # Clean up
+    tilt_servo.stop()
+    print("Tilt servo stopped")
+    sleep(.5)
+    base_servo.stop()
+    print("Base servo stopped")
